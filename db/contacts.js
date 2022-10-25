@@ -13,12 +13,22 @@ async function listContacts() {
 async function getContactById(contactId) {
   const contacts = await listContacts();
   const getContact = contacts.find(contact => contact.id === contactId);
+
+  if (!getContact) {
+    return null;
+  }
+
   return getContact;
 }
 
 async function removeContact(contactId) {
   const contactsList = await listContacts();
   const deleteContact = contactsList.find(cont => cont.id === contactId);
+
+  if (!deleteContact) {
+    return null;
+  }
+  
   const filterContacts = contactsList.filter(cont => cont.id !== contactId);
   await fs.writeFile(contactsPath, JSON.stringify(filterContacts));
 
